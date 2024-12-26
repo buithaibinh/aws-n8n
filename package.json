@@ -1,0 +1,12 @@
+{
+  "name": "n8n-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Binh Bui <buithaibinh@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "docker-compose --file docker-compose.prod.yml up -d",
+    "stop": "docker-compose --file docker-compose.prod.yml down",
+    "dev": "docker-compose up"
+  }
+}

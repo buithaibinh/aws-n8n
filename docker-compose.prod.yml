@@ -1,0 +1,84 @@
+volumes:
+  db_storage:
+  n8n_storage:
+
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro # mount Docker socket, required for Nginx to listen to Docker events
+      - ./nginx/certs:/etc/nginx/certs:ro # Thư mục chứa chứng chỉ SSL
+      - ./nginx/html:/usr/share/nginx/html # Ánh xạ thư mục trên host vào container
+      - ./nginx/custom.conf:/etc/nginx/conf.d/custom.conf:ro  # Mount custom config
+    environment:
+      VIRTUAL_HOST: n8n.codewithyou.com
+      LETSENCRYPT_HOST: n8n.codewithyou.com
+      LETSENCRYPT_EMAIL: buithaibinh@gmail.com
+      # HTTPS_METHOD: redirect # Tự động chuyển HTTP sang HTTPS
+      HTTPS_METHOD: noredirect # Không chuyển HTTP sang HTTPS
+
+  nginx-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-letsencrypt
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # - ./nginx/certs:/etc/nginx/certs # Thư mục chứa chứng chỉ SSL
+      # - ./nginx/html:/usr/share/nginx/html # Phải cùng thư mục với nginx-proxy
+    environment:
+      NGINX_PROXY_CONTAINER: nginx-proxy # Chỉ định rõ container nginx-proxy
+
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - POSTGRES_NON_ROOT_USER
+      - POSTGRES_NON_ROOT_PASSWORD
+    volumes:
+      - db_storage:/var/lib/postgresql/data
+      - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -h localhost -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    environment:
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+      - DB_POSTGRESDB_USER=${POSTGRES_NON_ROOT_USER}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
+      - VIRTUAL_HOST=n8n.codewithyou.com # Thay đổi domain
+      - VIRTUAL_PORT=5678 # Cổng nội bộ của ứng dụng
+      - LETSENCRYPT_HOST=n8n.codewithyou.com # Cập nhật domain cho SSL
+      - LETSENCRYPT_EMAIL=bvbinh@sk-global.biz # Email để nhận thông báo từ Let's Encrypt
+    ports:
+      - 5678:5678
+    links:
+      - postgres
+    volumes:
+      - n8n_storage:/home/node/.n8n
+    depends_on:
+      postgres:
+        condition: service_healthy
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: uv/ec2/n8n # Name of the log group
+        awslogs-region: ${AWS_REGION} # Region of CloudWatch Logs
+        awslogs-create-group: "true" # Create the log group if it doesn't exist
+        awslogs-multiline-pattern: "^" # Treat all lines as a single log message
