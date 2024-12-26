@@ -12,8 +12,8 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro # mount Docker socket, required for Nginx to listen to Docker events
-      # - ./nginx/certs:/etc/nginx/certs:ro # Thư mục chứa chứng chỉ SSL
-      # - ./nginx/html:/usr/share/nginx/html # Ánh xạ thư mục trên host vào container
+      - ./nginx/certs:/etc/nginx/certs:ro # Thư mục chứa chứng chỉ SSL
+      - ./nginx/html:/usr/share/nginx/html # Ánh xạ thư mục trên host vào container
       - ./nginx/custom.conf:/etc/nginx/conf.d/custom.conf:ro  # Mount custom config
     environment:
       VIRTUAL_HOST: n8n.codewithyou.com
@@ -29,8 +29,8 @@ services:
       - nginx-proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      # - ./nginx/certs:/etc/nginx/certs # Thư mục chứa chứng chỉ SSL
-      # - ./nginx/html:/usr/share/nginx/html # Phải cùng thư mục với nginx-proxy
+      - ./nginx/certs:/etc/nginx/certs # Thư mục chứa chứng chỉ SSL
+      - ./nginx/html:/usr/share/nginx/html # Phải cùng thư mục với nginx-proxy
     environment:
       NGINX_PROXY_CONTAINER: nginx-proxy # Chỉ định rõ container nginx-proxy
 
