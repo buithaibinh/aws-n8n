@@ -66,13 +66,8 @@ services:
       - VIRTUAL_PORT=5678 # Cổng nội bộ của ứng dụng
       - LETSENCRYPT_HOST=n8n.codewithyou.com # Cập nhật domain cho SSL
       - LETSENCRYPT_EMAIL=bvbinh@sk-global.biz # Email để nhận thông báo từ Let's Encrypt
-      - N8N_EDITOR_BASE_URL=n8n.codewithyou.com # Cập nhật domain cho trang chỉnh sửa
+      - N8N_EDITOR_BASE_URL=https://n8n.codewithyou.com
       - GENERIC_TIMEZONE=Asia/Ho_Chi_Minh # Cập nhật múi giờ
-      # - N8N_EMAIL_MODE=smtp
-      # - N8N_SMTP_USER=${SMTP_USER}
-      # - N8N_SMTP_PASS=${SMTP_PASS}
-      # - N8N_SMTP_HOST=${SMTP_HOST}
-      # - N8N_SMTP_SENDER=${SMTP_SENDER}
     ports:
       - 5678:5678
     links:
