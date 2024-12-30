@@ -49,6 +49,7 @@ Thumbs.db
 *.wmv
 
 .env
+.env.*
 # CDK assets
 cdk.out
 
