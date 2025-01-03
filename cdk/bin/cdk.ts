@@ -16,7 +16,9 @@ if (!account) {
   throw new Error('CDK_DEFAULT_ACCOUNT is not set');
 }
 
-const stack = new CdkStack(app, `${appName}-${stage}`, {
+const stackName = `${appName}-${stage}`;
+
+const stack = new CdkStack(app, stackName, {
   env: {
     account,
     region,
