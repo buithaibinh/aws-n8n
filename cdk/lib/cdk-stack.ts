@@ -76,7 +76,7 @@ export class CdkStack extends cdk.Stack {
     });
 
     new LinuxEc2Instance(this, 'EC2Instance1', {
-      instanceType: 't2.micro',
+      instanceType: 't2.small',
       amiId: 'ami-06650ca7ed78ff6fa', // Ubuntu 24.04 LTS amd64
       keyName: props.keyName,
       securityGroupRules: [

@@ -1,9 +1,9 @@
 {
-  "n8n-dev": {
-    "EC2Instance1InstanceIdD4E02675": "i-00b22cea33ed6cbf0",
-    "bucketName": "n8n-dev-bucket83908e77-zoietbibi44y",
-    "ecrRepositoryName": "n8n-dev-api",
-    "EC2Instance1InstancePublicIP56E81E38": "54.251.205.124",
-    "ecrRepositoryUri": "572462957664.dkr.ecr.ap-southeast-1.amazonaws.com/n8n-dev-api"
+  "n8n-prod": {
+    "EC2Instance1InstanceIdD4E02675": "i-0f02acb4b2cd09fca",
+    "bucketName": "n8n-prod-bucket83908e77-rxgkl95wlmfv",
+    "ecrRepositoryName": "n8n-prod-api",
+    "EC2Instance1InstancePublicIP56E81E38": "52.221.148.71",
+    "ecrRepositoryUri": "572462957664.dkr.ecr.ap-southeast-1.amazonaws.com/n8n-prod-api"
   }
 }

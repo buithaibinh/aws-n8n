@@ -58,7 +58,7 @@
     "@aws-cdk/aws-cloudwatch-actions:changeLambdaPermissionLogicalIdForLambdaAction": true,
 
     "region": "ap-southeast-1",
-    "stage": "dev",
+    "stage": "prod",
     "appName": "n8n",
     "keyName": "n8n-key-pair"
   }

@@ -16,8 +16,8 @@ services:
       - ./nginx/html:/usr/share/nginx/html # Ánh xạ thư mục trên host vào container
       - ./nginx/custom.conf:/etc/nginx/conf.d/custom.conf:ro  # Mount custom config
     environment:
-      VIRTUAL_HOST: n8n.codewithyou.com
-      LETSENCRYPT_HOST: n8n.codewithyou.com
+      VIRTUAL_HOST: n8.codewithyou.com
+      LETSENCRYPT_HOST: n8.codewithyou.com
       LETSENCRYPT_EMAIL: buithaibinh@gmail.com
       # HTTPS_METHOD: redirect # Tự động chuyển HTTP sang HTTPS
       HTTPS_METHOD: noredirect # Không chuyển HTTP sang HTTPS
@@ -62,11 +62,11 @@ services:
       - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
       - DB_POSTGRESDB_USER=${POSTGRES_NON_ROOT_USER}
       - DB_POSTGRESDB_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
-      - VIRTUAL_HOST=n8n.codewithyou.com # Thay đổi domain
+      - VIRTUAL_HOST=n8.codewithyou.com # Thay đổi domain
       - VIRTUAL_PORT=5678 # Cổng nội bộ của ứng dụng
-      - LETSENCRYPT_HOST=n8n.codewithyou.com # Cập nhật domain cho SSL
+      - LETSENCRYPT_HOST=n8.codewithyou.com # Cập nhật domain cho SSL
       - LETSENCRYPT_EMAIL=bvbinh@sk-global.biz # Email để nhận thông báo từ Let's Encrypt
-      - N8N_EDITOR_BASE_URL=https://n8n.codewithyou.com
+      - N8N_EDITOR_BASE_URL=https://n8.codewithyou.com
       - GENERIC_TIMEZONE=Asia/Ho_Chi_Minh # Cập nhật múi giờ
     ports:
       - 5678:5678
