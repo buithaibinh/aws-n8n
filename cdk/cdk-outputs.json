@@ -1,6 +1,7 @@
 {
   "n8n-prod": {
     "EC2Instance1InstanceIdD4E02675": "i-03748b6e6ca4947e7",
+    "EC2PublicIp": "46.137.215.229",
     "EC2Instance1InstancePublicIP56E81E38": "46.137.215.229"
   }
 }
