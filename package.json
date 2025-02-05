@@ -7,6 +7,7 @@
   "scripts": {
     "start": "docker-compose --file docker-compose.prod.yml up -d",
     "stop": "docker-compose --file docker-compose.prod.yml down",
-    "dev": "docker-compose up"
+    "dev": "docker-compose up",
+    "update": "docker-compose --file docker-compose.prod.yml pull n8n && docker-compose --file docker-compose.prod.yml up n8n -d"
   }
 }
