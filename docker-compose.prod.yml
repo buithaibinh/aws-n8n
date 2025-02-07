@@ -25,6 +25,7 @@ services:
   nginx-letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: nginx-letsencrypt
+    restart: unless-stopped
     depends_on:
       - nginx-proxy
     volumes:
