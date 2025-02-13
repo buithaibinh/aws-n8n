@@ -134,7 +134,3 @@ const ec2Instance = new LinuxEc2Instance(this, 'MyLinuxInstance', {
   ebsVolumeSize: 20, // Attach a 20 GiB EBS volume
 });
 ```
-
-## License
-
-Copyright (c) 2024, SK-Global. All Rights Reserved.
